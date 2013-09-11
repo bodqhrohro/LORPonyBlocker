@@ -19,13 +19,14 @@
        function(){
         $.ajax({
          url: BASEURL,
-         dataType: 'jsonp',
+         dataType: 'json',
          success: function(data){
-          var lastList=localStorage.getItem('ponyfaglist');
-          if (lastList==data){
+          var lastList=JSON.parse(localStorage.getItem('ponyfaglist'));
+          console.log(lastList);
+          if (lastList.equals(data)){
            alert('База не изменена, обновление не требуется');
           } else {
-           localstorage.setItem('ponyfaglist',data);
+           localstorage.setItem('ponyfaglist',JSON.stringify(data));
            alert('База обновлена');
           }
          },
