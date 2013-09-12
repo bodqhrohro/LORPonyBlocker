@@ -3,51 +3,62 @@
 // @namespace   lorponyblocker
 // @description Скрипт, скрывающий аватарки поклонников My Little Pony на linux.org.ru
 // @include     *linux.org.ru*
-// @version     0.1
+// @version     0.2
 // ==/UserScript==
 
 (function($){
 
- var BASEURL='https://raw.github.com/bodqhrohro/LORPonyBlocker/master/ponyfaglist.json';
- 
- if (/settings/.test(window.location.href)){
-  $('#profileForm tr:eq(7)').after(
-   $('<tr/>').append(
-    $('<td/>').append(
-     $('<button>Обновить базу понифагов</button>')
-      .click(
-       function(){
-        $.ajax({
-         url: BASEURL,
-         dataType: 'json',
-         success: function(data){
-          var lastList=JSON.parse(localStorage.getItem('ponyfaglist'));
-          console.log(lastList);
-          if (lastList.equals(data)){
-           alert('База не изменена, обновление не требуется');
-          } else {
-           localstorage.setItem('ponyfaglist',JSON.stringify(data));
-           alert('База обновлена');
-          }
-         },
-         error: function(){
-          alert('Обновление не доступно. Проверьте Ваше интернет-подключение или обратитесь к разработчику.');
-         }
-        });
-        return false;
-       }
-      )
-    )
-   )
-  );
- }
- var base=JSON.parse(localStorage.getItem('ponyfaglist'));
+ var ponyfaglist=[
+ 'a1batross',
+ 'amomymous',
+ 'AnimusPEXUS',
+ 'Antimatter',
+ 'avertex',
+ 'Cooler',
+ 'Copycat',
+ 'cryptohedge',
+ 'Dark_SavanT',
+ 'Darth_Revan',
+ 'dearboy',
+ 'Deneb',
+ 'derlafff',
+ 'drBatty',
+ 'druganddrop-2',
+ 'ekzotech',
+ 'essir',
+ 'evilmanul',
+ 'Extraterrestrial',
+ 'Falcon-peregrinus',
+ 'fornlr',
+ 'hizel',
+ 'Hoodoo',
+ 'Igorrr',
+ 'IPR',
+ 'ishitori',
+ 'kiverattes',
+ 'ktk',
+ 'Legioner',
+ 'Lorchanin',
+ 'mephistopheles',
+ 'mopsene',
+ 'morse',
+ 'Old_Hamster',
+ 'olibjerd',
+ 'PaxthonFettel',
+ 'proud_anon',
+ 'rikardoac',
+ 'Romaboy',
+ 'rtvd',
+ 'sudoer',
+ 'tailgunner',
+ 'vazgen05',
+ 'x0r'
+ ];
  var checkNick=function(){
   var nick=$(this).text();
-  for (var i=0;i<base.length;i++){
-   if (nick==base[i]){
-    console.log(base[i]+' '+nick);
-   (($(this).closest('.msg-container')).find('.userpic')).hide();
+  for (var i=0;i<ponyfaglist.length;i++){
+   if (nick==ponyfaglist[i]){
+    (($(this).closest('.msg-container')).find('.userpic')).hide();
    }
   }
  };
