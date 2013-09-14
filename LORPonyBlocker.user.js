@@ -3,7 +3,7 @@
 // @namespace   lorponyblocker
 // @description Скрипт, скрывающий аватарки поклонников My Little Pony на linux.org.ru
 // @include     *linux.org.ru*
-// @version     0.2
+// @version     0.2.1
 // ==/UserScript==
 
 (function($){
@@ -68,6 +68,7 @@
  'morse',
  'NetForHack',
  'Newlifer',
+ 'nihil',
  'Old_Hamster',
  'OldWiseCat',
  'olibjerd',
@@ -187,7 +188,10 @@
   }
  };
 
-var checkNick=function(){
+ var ponycache=localStorage.getItem('ponycache');
+ ponycache=ponycache?JSON.parse(ponycache):{};
+  
+ var checkNick=function(){
   var nick=$(this).text();
   for (var i=0;i<ponyfaglist.length;i++){
    if (nick==ponyfaglist[i]){
@@ -198,8 +202,19 @@ var checkNick=function(){
    }
   }
   if (readSetting('fill_ponies')){
-   (($(this).closest('.msg-container')).find('.userpic img')).attr('src',randPony()).width(100).height(100);
+   for (pony in ponycache){
+    if (pony==nick) {
+     var av=ponycache[pony];
+     break;
+    }
+   }
+   if (av==undefined){
+    var av=randPony();
+    ponycache[nick]=av;
+   }
+   (($(this).closest('.msg-container')).find('.userpic img')).attr('src',av).width(100).height(100);
   }
  };
  $('article.msg a[itemprop=\'creator\']').each(checkNick);
+ localStorage.setItem('ponycache',JSON.stringify(ponycache));
 })(unsafeWindow?unsafeWindow.jQuery:jQuery);
