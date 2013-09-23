@@ -6,6 +6,14 @@
 // @version     0.2.1
 // ==/UserScript==
 
+(function(document, fn) {
+    var script = document.createElement('script');
+    script.setAttribute("type", "text/javascript");
+    script.textContent = '(' + fn + ')(window, window.document);';
+    document.head.appendChild(script); // run the script
+    document.head.removeChild(script); // clean up
+})(document, function(window, document) {
+
 (function($){
 
  var ponyfaglist=[
@@ -217,4 +225,7 @@
  };
  $('article.msg a[itemprop=\'creator\']').each(checkNick);
  localStorage.setItem('ponycache',JSON.stringify(ponycache));
-})(unsafeWindow?unsafeWindow.jQuery:jQuery);
+})(jQuery);
+
+
+});
