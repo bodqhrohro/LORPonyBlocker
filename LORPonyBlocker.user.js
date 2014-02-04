@@ -74,7 +74,6 @@
  'mephistopheles',
  'mopsene',
  'morse',
- 'NetForHack',
  'Newlifer',
  'nihil',
  'Old_Hamster',
